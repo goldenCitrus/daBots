@@ -64,13 +64,18 @@ async def on_message(message):
                 # 
                 if cooldown == 0:
                     send_message = True
-                    with open(filename, 'w') as f:
-                        f_str = f.read
-                        temp_var = int(f_str)
+                    # Open with 'r' to read, and use .read() to get the content
+                    with open(filename, 'r') as f:
+                        f_str = f.read().strip() # .strip() removes hidden spaces/newlines
+                        if f_str: # This checks if the string is NOT empty
+                            temp_var = int(f_str)
+                        else:
+                            temp_var = 0  # Default to 0 if the file is empty
+
                     with open(active_filename, 'w') as f2:
                         json.dump(temp_var, f2)
-        else:
-            send_message = False
+                else:
+                     send_message = False
             cooldown -= 1
             if bool(er_words) == True and send_message == True:
                 if len(er_words) == 1:

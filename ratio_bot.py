@@ -68,11 +68,21 @@ async def on_message(message):
             for key, value in leaderboard.items():
                 user_id = key.translate(str.maketrans('', '', string.punctuation))
                 user = client.get_user(int(user_id))
-                if num <= 10:
-                    embed.add_field(name=f'{user.name} has been ratioed:', value=f'{value} times', inline=False)
-                    num += 1
+                
+                # If not in cache, try to fetch from Discord API
+                if user is None:
+                    try:
+                        user = await client.fetch_user(int(user_id))
+                    except:
+                        user_name = "Unknown User"
+                    else:
+                        user_name = user.name
                 else:
-                    break
+                    user_name = user.name
+            
+                if num <= 10:
+                    embed.add_field(name=f'{user_name} has been ratioed:', value=f'{value} times', inline=False)
+                    num += 1
             await message.channel.send(embed=embed)
         else:
             await message.channel.send('No one in this server has been ratioed yet :pensive:')
@@ -97,4 +107,5 @@ async def on_message(message):
     
 
 
-client.run('MTA1MTc3NTYyNTg0MjY3MTcwNg.G3PwLo.xbRVdaYGPO2s3nrvnfZf6ZaaGKQKVQytVDDm80')
+client.run('MTA1MTc3NTYyNTg0MjY3MTcwNg.GBbrwb.KZdVoCzAEZdLKYcEkrFjqy1LMEbuTBYhqTe59k')
+# ^ Security token
