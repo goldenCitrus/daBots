@@ -97,4 +97,5 @@ async def on_message(message):
 #         message.delete()
 
 
-client.run('MTA1MTc2NjEzMDgwMjQzNDA5OA.GAGd-Q.Twc6kbVgYuXMFb51aBXv6XoewdG24gP1bZi-iM')
+client.run('MTA1MTc2NjEzMDgwMjQzNDA5OA.GaSVyN.LgYVaoTqWZf2Lf9zdpnQ8FDfcq-KoVw1FExBlw')
+# ^ security token

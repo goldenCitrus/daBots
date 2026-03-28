@@ -59,4 +59,5 @@ async def on_message(message):
 
 
 
-client.run('MTA3MDg4MjU2MzA5NjMzNDQ3MQ.GQMsIX.tLmym0F5GZmlbo5CEBCqZUBt76j-I4dEQQq7Qk')
+client.run('MTA3MDg4MjU2MzA5NjMzNDQ3MQ.GgRnTl.sDDtvy-FIj7V0KnJWjJwEw0k-dHP0caLofB8O0')
+# ^ security token

@@ -125,4 +125,5 @@ async def stop(ctx):
 #         await voice_client.play('silly_haha.mp3')
 
 
-bot.run('MTA1MTgwMTg1NjU1ODUxODMxMg.G--fmG.sgBMDG1IjxTjhv9Trs8Eq5GP9JNH3-t5uFQTeU')
+bot.run('MTA1MTgwMTg1NjU1ODUxODMxMg.G0TCJP.x88ZB7Lt0jW5rJ-VFLk2fHWubLL5wlOWUGvXcE')
+# ^ security token
