@@ -48,7 +48,7 @@ async def on_message(message):
     # 3.If the message is in the non allowed Channels
     #
     # If all pass the bot will Ratio
-    if random.randint(0,75) == 10 and message.author.id != BotId and not(channel in Non_Ratio_Channel):
+    if random.randint(0,5) == 1 and message.author.id != BotId and not(channel in Non_Ratio_Channel):
         await message.channel.send(f"{message.author.mention} Ratio")
         
         if bool(leaderboard.get(f'<@{message.author.id}>')) is True:
@@ -65,7 +65,7 @@ async def on_message(message):
         await message.channel.send(f"{message.author.mention} I actually kinda like this one")
     
     # Code for viewing the leaderboard
-    if str(message.content) == '!ratio' and bool(leaderboard) == True:
+    if str(message.content) == '!ratio':
         num = 0
         embed = discord.Embed(title=f'Leaderboard for {message.guild.name}', description='the top 10 yuh')
         embed.set_thumbnail(url=message.guild.icon)
@@ -88,10 +88,6 @@ async def on_message(message):
                 embed.add_field(name=f'{user_name} has been ratioed:', value=f'{value} times', inline=False)
                 num += 1
         await message.channel.send(embed=embed)
-    else:
-        await message.channel.send('No one in this server has been ratioed yet :pensive:')
-            
-  
 # @bot.command(name='lb')
 # async def lb(ctx, arg):
 #     server_name = ctx.guild

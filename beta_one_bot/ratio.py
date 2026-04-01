@@ -26,7 +26,7 @@ def ratio(I):
     # 3.If the message is in the non allowed Channels
     #
     # If all pass the bot will Ratio
-    if random.randint(0,75) == 10 and I.message.author.id != I.BotId and not(I.message.channel in Non_Ratio_Channel):
+    if random.randint(0,75) == 1 and I.message.author.id != I.botID and not(I.message.channel in Non_Ratio_Channel):
         # await message.channel.send(f"{message.author.mention} Ratio")
         I.Return_Message = f"{I.message.author.mention} Ratio"
 

@@ -1,16 +1,16 @@
 import discord
 from discord.ext import commands
-import random
-import json
-import os
-import string
+import time
 
 import ratio
-import message
+import information
+import I_hardly_know_her
 
 #Establish bot Id so bot doesnt respond to itself
 #Change Bot Id to own bot
 BotId = 177504009748217856
+Last_IHKH = time.time()
+IHKR_Cooldown = 0
 
 #Establish the Client for the Discord Bot
 client = discord.Client(intents=discord.Intents.all())
@@ -27,17 +27,23 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    M = message(message, client, BotId)
-    ratio(M)
-    await message.channel.send(f"{M.Return_Message}")
+    I = information.information(message, client=client, BotId=BotId)
+    ratio.ratio(I)
+    if I.Return_Message != '':
+        await message.channel.send(f"{I.Return_Message}")
+    if (time.time() - Last_IHKH) > IHKR_Cooldown:
+        I_hardly_know_her.I_hardly_know_her(I)
+        if I.CF:
+            await message.add_reaction('<:feetChan:1047798934594146335>')
+        if I.IHKH_vaule:
+            await message.channel.send(f"{message.author.mention} {I.Return_Message}")
 
-    #retrives previous leaderboard info
-    
-    # Code for viewing the leaderboard
-    if str(message.content) == '!ratio':
-        leaderboard(M)
-        await message.channel.send(f"{M.Return_Message}")
-        
+
+#@client.command()
+#async def ratio(ctx):
+#    I = information.information(ctx)
+#    ratio.leaderboard(I)
+#    await ctx.send(f"{I.Return_Message}")
 
 client.run('MTA1MTc3NTYyNTg0MjY3MTcwNg.GBbrwb.KZdVoCzAEZdLKYcEkrFjqy1LMEbuTBYhqTe59k')
 # ^ Security token
