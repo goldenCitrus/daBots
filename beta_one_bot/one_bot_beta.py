@@ -9,6 +9,10 @@ import I_hardly_know_her
 #Establish bot Id so bot doesnt respond to itself
 #Change Bot Id to own bot
 BotId = 177504009748217856
+
+#ID for boomer server
+guildId =  1008443588344025089
+
 Last_IHKH = time.time()
 IHKR_Cooldown = 0
 
