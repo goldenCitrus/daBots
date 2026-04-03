@@ -11,7 +11,7 @@ import I_hardly_know_her
 BotId = 177504009748217856
 
 #gets Guild ID
-const guild = client.guilds.cache.get(guildID)
+const guild = 1008443588344025089
 
 Last_IHKH = time.time()
 IHKR_Cooldown = 0
