@@ -24,6 +24,21 @@ client = discord.Client(intents=discord.Intents.all())
 async def on_ready():
     print(f'{client.user} is now ready')
 
+function setupSlashCommands(client, guildId) {
+    const commands = [
+{
+        name: 'leaderboard',
+        description: 'leaderboard for who has been ratiod',
+        type: 'EMBED',
+        required: true,
+        maxLength: 2000
+}
+]
+}
+]
+} 
+
+
 #Ratio Code
 @client.event
 #Checks at a sent message
