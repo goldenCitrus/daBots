@@ -24,6 +24,8 @@ client = discord.Client(intents=discord.Intents.all())
 async def on_ready():
     print(f'{client.user} is now ready')
 
+
+# attempt to try to use slash command
 function setupSlashCommands(client, guildId) {
     const commands = [
     {
