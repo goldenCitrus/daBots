@@ -10,8 +10,8 @@ import I_hardly_know_her
 #Change Bot Id to own bot
 BotId = 177504009748217856
 
-#ID for boomer server
-guildId =  1008443588344025089
+#gets Guild ID
+const guild = client.guilds.cache.get(guildID)
 
 Last_IHKH = time.time()
 IHKR_Cooldown = 0
