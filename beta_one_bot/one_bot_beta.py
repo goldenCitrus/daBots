@@ -35,10 +35,10 @@ function setupSlashCommands(client, guildId) {
                 required: true,
                 maxLength: 2000
             }
-        ]
+                ]
     }
 ]
-} 
+};
 
 
 #Ratio Code
