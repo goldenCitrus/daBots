@@ -26,15 +26,17 @@ async def on_ready():
 
 function setupSlashCommands(client, guildId) {
     const commands = [
-{
+    {
         name: 'leaderboard',
         description: 'leaderboard for who has been ratiod',
-        type: 'EMBED',
-        required: true,
-        maxLength: 2000
-}
-]
-}
+        options: [
+            {
+                type: 'EMBED',
+                required: true,
+                maxLength: 2000
+            }
+        ]
+    }
 ]
 } 
 
