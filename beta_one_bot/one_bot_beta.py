@@ -38,7 +38,7 @@ function setupSlashCommands(client, guildId) {
                 ]
     }
 ]
-};
+}
 
 
 #Ratio Code
