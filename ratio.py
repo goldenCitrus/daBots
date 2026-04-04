@@ -7,42 +7,46 @@ import discord
 Non_Ratio_Channel = {"vent-advice-channel"}
 
 def ratio(I):
-    
-    #retrives previous leaderboard info
     filename = f'{I.message.guild.name}.json'
 
+    # Load leaderboard
     if os.path.exists(filename):
-            with open(filename, 'r') as f:
-                leaderboard = json.load(f)
+        with open(filename, 'r') as f:
+            leaderboard = json.load(f)
     else:
         leaderboard = {}
-            
+
     if I.message.author == I.client.user:
         return
 
-    # Checks message for Ratio base on 
-    # 1.Random odds for Ratio
-    # 2.If the author is not the Bot
-    # 3.If the message is in the non allowed Channels
-    #
-    # If all pass the bot will Ratio
-    if random.randint(0,75) == 1 and I.message.author.id != I.botID and not(I.message.channel in Non_Ratio_Channel):
-        # await message.channel.send(f"{message.author.mention} Ratio")
+    user_id = str(I.message.author.id)
+    user_name = I.message.author.name
+
+    # Ratio trigger
+    if random.randint(0,75) == 1 and user_id != str(I.botID) and I.message.channel.name not in Non_Ratio_Channel:
         I.Return_Message = f"{I.message.author.mention} Ratio"
 
-        if bool(leaderboard.get(f'<@{I.message.author.id}>')) is True:
-            leaderboard[f'<@{I.message.author.id}>'] += 1
+        if user_id in leaderboard:
+            leaderboard[user_id]["amount"] += 1
         else:
-            leaderboard[f'<@{I.message.author.id}>'] = 1
-        temp = sorted(leaderboard.items(), key=lambda x:x[1], reverse=True)
-        leaderboard = dict(temp)
+            leaderboard[user_id] = {
+                "name": user_name,
+                "amount": 1
+            }
+
+        # Sort leaderboard
+        leaderboard = dict(sorted(
+            leaderboard.items(),
+            key=lambda x: x[1]["amount"],
+            reverse=True
+        ))
 
         with open(filename, 'w') as f:
-            json.dump(leaderboard, f)
+            json.dump(leaderboard, f, indent=4)
 
         return
-    
-    elif random.randint(0,4080) == 4000 and I.message.author.id != I.BotId and not(I.message.channel in Non_Ratio_Channel):
+
+    elif random.randint(0,4080) == 4000 and user_id != str(I.botID) and I.message.channel.name not in Non_Ratio_Channel:
         I.Return_Message = f"{I.message.author.mention} I actually kinda like this one"
 
 def leaderboard(I):
@@ -50,28 +54,30 @@ def leaderboard(I):
     filename = f'{server_name}.json'
 
     if os.path.exists(filename):
-            with open(filename, 'r') as f:
-                leaderboard = json.load(f)
+        with open(filename, 'r') as f:
+            leaderboard = json.load(f)
     else:
         leaderboard = {}
-            
-    num = 0
-    embed = discord.Embed(title=f'Leaderboard for {server_name}', description='the top 10 yuh')
+
+    embed = discord.Embed(
+        title=f'Leaderboard for {server_name}',
+        description='Top 10 most ratioed users'
+    )
+
     embed.set_thumbnail(url=I.message.guild.icon)
-    print(I.client)
-    print(I.client.users())
-    list_user = I.client.users()
-    print(list_user)
-    for i in list_user:
-        print(i)
-        for key, value in leaderboard.items():
-            if i.id == key:
-                print(i.id)
-                print(key)
-                user_name = i.name 
-                if num <= 10:
-                    embed.add_field(name=f'{user_name} has been ratioed:', value=f'{value} times', inline=False)
-                    num += 1
-                    I.Return_Message = embed
-                else:
-                    I.Return_Message = 'No one in this server has been ratioed yet :pensive:'
+
+    if not leaderboard:
+        I.Return_Message = 'No one in this server has been ratioed yet :pensive:'
+        return
+
+    for i, (user_id, data) in enumerate(leaderboard.items()):
+        if i >= 10:
+            break
+
+        embed.add_field(
+            name=f"{i+1}. {data['name']}",
+            value=f"Ratioed {data['amount']} times",
+            inline=False
+        )
+
+    I.Return_Message = embed
