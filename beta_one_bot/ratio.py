@@ -60,7 +60,7 @@ def leaderboard(I):
     embed.set_thumbnail(url=I.message.guild.icon)
     for key, value in leaderboard.items():
         user_id = key.translate(str.maketrans('', '', string.punctuation))
-        user = I.client.get_user(int(user_id))
+        user = I.client.user
         # If not in cache, try to fetch from Discord API
         if user is None:
             try:
