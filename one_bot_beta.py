@@ -12,11 +12,11 @@ import I_hardly_know_her
 BotId = 177504009748217856
 Last_IHKH = time.time()
 IHKR_Cooldown = 60
+GUILD_ID = discord.Object(id=1008443588344025089)
 
 class Client(commands.Bot):
     async def on_ready(self):
         print(f'Logged on as {self.user}!')
-
         try:
             guild = discord.Object(id=1008443588344025089)
             synced = await self.tree.sync(guild=guild)
@@ -24,33 +24,16 @@ class Client(commands.Bot):
         except Exception as e:
             print(f'Error syncing commands: {e}')
 
-    async def on_message(self, message):
-        if message.author == self.user:
-            return
-        
-        if message.content.startswith('hello'):
-            await message.channel.send(f'Hi there {message.author}')
-
-    async def on_reaction_add(self, reaction):
-        await reaction.message.channel.send('you reacted')
-
-
 #Establish the Client for the Discord Bot
 intents = discord.Intents.default()
 intents.message_content = True
 client = Client(command_prefix="!", intents=intents)
-
-GUILD_ID = discord.Object(id=1008443588344025089)
-
-#client = discord.Client(intents=discord.Intents.all())
-# bot = commands.Bot(command_prefix='!', intents=discord.Intents.default())
 
 @client.tree.command(name='leaderboard', description="View the ratio Leaderboard", guild=GUILD_ID)
 async def leaderboard(interaction: discord.Interaction):
     I = information.information(interaction,client)
     ratio.leaderboard(I)
     await interaction.response.send_message(embed=I.Return_Message)
-    #await interaction.response.send_message(f'Hi')
 
 #Ratio Code
 @client.event

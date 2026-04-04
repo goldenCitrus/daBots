@@ -58,23 +58,20 @@ def leaderboard(I):
     num = 0
     embed = discord.Embed(title=f'Leaderboard for {server_name}', description='the top 10 yuh')
     embed.set_thumbnail(url=I.message.guild.icon)
-    for key, value in leaderboard.items():
-        user_id = key.translate(str.maketrans('', '', string.punctuation))
-        user = I.client.user
-        # If not in cache, try to fetch from Discord API
-        if user is None:
-            try:
-                user = I.client.fetch_user(int(user_id))
-            except:
-                user_name = "Unknown User"
-            else:
-                user_name = user.name
-        else:
-            user_name = user.name
-    
-        if num <= 10:
-            embed.add_field(name=f'{user_name} has been ratioed:', value=f'{value} times', inline=False)
-            num += 1
-            I.Return_Message = embed
-        else:
-            I.Return_Message = 'No one in this server has been ratioed yet :pensive:'
+    print(I.client)
+    print(I.client.users())
+    list_user = I.client.users()
+    print(list_user)
+    for i in list_user:
+        print(i)
+        for key, value in leaderboard.items():
+            if i.id == key:
+                print(i.id)
+                print(key)
+                user_name = i.name 
+                if num <= 10:
+                    embed.add_field(name=f'{user_name} has been ratioed:', value=f'{value} times', inline=False)
+                    num += 1
+                    I.Return_Message = embed
+                else:
+                    I.Return_Message = 'No one in this server has been ratioed yet :pensive:'
