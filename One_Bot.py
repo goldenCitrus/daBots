@@ -3,8 +3,8 @@ from discord.ext import commands
 from discord import app_commands
 import time
 
-import ratio
-import information
+import Ratio
+import Information
 import I_hardly_know_her
 import Culling_Game
 import Andrea_Fish
@@ -37,19 +37,19 @@ client = Client(command_prefix="!", intents=intents)
 
 @client.tree.command(name='leaderboard', description="View the ratio Leaderboard", guild=GUILD_ID)
 async def leaderboard(interaction: discord.Interaction):
-    I = information.information(interaction,client)
-    ratio.leaderboard(I)
+    I = Information.information(interaction,client)
+    Ratio.leaderboard(I)
     await interaction.response.send_message(embed=I.Return_Message)
 
 @client.tree.command(name='rules', description="View the Culling Game Rules", guild=GUILD_ID)
 async def rules(interaction: discord.Interaction):
-    I = information.information(interaction,client)
+    I = Information.information(interaction,client)
     Culling_Game.CurrentRules(I)
     await interaction.response.send_message(I.Return_Message)
 
 @client.tree.command(name='join', description="Join the Culling Game Rules", guild=GUILD_ID)
 async def rules(interaction: discord.Interaction):
-    I = information.information(interaction,client)
+    I = Information.information(interaction,client)
     Culling_Game.Join_The_Game(I)
     message = str(interaction.user).capitalize()
     await interaction.response.send_message(f'{message[:-2]} {I.Return_Message}')
@@ -61,8 +61,8 @@ async def on_message(message):
     if message.author == client.user:
         return
     
-    I = information.information(message, client=client, BotId=BotId)
-    ratio.ratio(I)
+    I = Information.information(message, client=client, BotId=BotId)
+    Ratio.ratio(I)
     if I.Return_Message != '':
         await message.channel.send(f"{I.Return_Message}")
 
