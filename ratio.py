@@ -1,7 +1,6 @@
 import os
 import json
 import random
-import string
 import discord
 
 Non_Ratio_Channel = {"vent-advice-channel"}
@@ -20,24 +19,26 @@ def ratio(I):
         return
 
     user_id = str(I.message.author.id)
-    user_name = I.message.author.name
+    user_name = I.message.author.name.capitalize()
 
     # Ratio trigger
     if random.randint(0,75) == 1 and user_id != str(I.botID) and I.message.channel.name not in Non_Ratio_Channel:
         I.Return_Message = f"{I.message.author.mention} Ratio"
 
         if user_id in leaderboard:
-            leaderboard[user_id]["amount"] += 1
+            leaderboard[user_id]["ratio"] += 1
+            leaderboard[user_id]["points"] += 1
         else:
             leaderboard[user_id] = {
                 "name": user_name,
-                "amount": 1
+                "ratio": 1,
+                "points": 1
             }
 
         # Sort leaderboard
         leaderboard = dict(sorted(
             leaderboard.items(),
-            key=lambda x: x[1]["amount"],
+            key=lambda x: x[1]["ratio"],
             reverse=True
         ))
 
@@ -76,7 +77,7 @@ def leaderboard(I):
 
         embed.add_field(
             name=f"{i+1}. {data['name']}",
-            value=f"Ratioed {data['amount']} times",
+            value=f"Ratioed {data['ratio']} times",
             inline=False
         )
 

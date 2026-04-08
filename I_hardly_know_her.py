@@ -1,7 +1,8 @@
 import random
 import string
+import time
 
-Non_Ratio_Channel = {"vent-advice-channel"}
+Non_Channel = {"vent-advice-channel"}
 
 def I_hardly_know_her(I):
     message_str = I.message.content
@@ -14,7 +15,7 @@ def I_hardly_know_her(I):
         I.CF = True
     else:
         # I hardly know her command v v
-        if len(message_str) < 100 and not(str(I.message.channel) in Non_Ratio_Channel):
+        if len(message_str) < 100 and not(str(I.message.channel) in Non_Channel):
             banned_words = ["boomer", "chandler"]
             er_words = []
             for i in split_message:
@@ -24,7 +25,7 @@ def I_hardly_know_her(I):
                 except IndexError:
                     continue
             if bool(er_words) == True:
-                I.IHKH_vaule = True
+                I.Last_IHKH = time.time()
                 if len(er_words) == 1:
                     I.Return_Message = f"{er_words.pop().capitalize()}? I hardly know her!"
 

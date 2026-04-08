@@ -5,5 +5,5 @@ class information:
         self.botID = BotId
 
         self.Return_Message = ''
-        self.IHKH_vaule = False
         self.CF = False
+        self.Last_IHKH = -1
