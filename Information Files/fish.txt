@@ -3,11 +3,13 @@ amberjack
 anchovy
 angelfish
 anglerfish
+arapaima
 barracuda
-bass
+bas
 basslet
 batfish
 blenny
+bluegill
 bream
 butterflyfish
 carp
@@ -17,6 +19,8 @@ characin
 chub
 cichlid
 cod
+clownfish
+crappie
 croaker
 damselfish
 darter
@@ -29,6 +33,7 @@ filefish
 fish
 flounder
 flyingfish
+gar
 goby
 grenadier
 grunt
@@ -37,6 +42,7 @@ hagfish
 halfbeak
 halosaur
 herring
+humuhumunukunukuapua’a
 jack
 jawfish
 killifish

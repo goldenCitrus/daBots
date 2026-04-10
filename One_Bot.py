@@ -16,10 +16,6 @@ Last_IHKH = time.time()
 IHKR_Cooldown = 600
 GUILD_ID = discord.Object(id=1008443588344025089)
 
-def IHKR_helper(I, Last_IHKH):
-    Last_IHKH = I.Last_IHKH
-
-
 class Client(commands.Bot):
     async def on_ready(self):
         print(f'Logged on as {self.user}!')
@@ -34,6 +30,12 @@ class Client(commands.Bot):
 intents = discord.Intents.default()
 intents.message_content = True
 client = Client(command_prefix="!", intents=intents)
+
+@client.tree.command(name='points', description="View the point standings", guild=GUILD_ID)
+async def leaderboard(interaction: discord.Interaction):
+    I = Information.information(interaction,client)
+    Culling_Game.ViewPoints(I)
+    await interaction.response.send_message(embed=I.Return_Message)
 
 @client.tree.command(name='leaderboard', description="View the ratio Leaderboard", guild=GUILD_ID)
 async def leaderboard(interaction: discord.Interaction):
@@ -70,9 +72,10 @@ async def on_message(message):
     if I.Return_Message == 'Fish Found':
         await message.channel.send('https://tenor.com/view/fish-spin-sha-gif-26863370')
     
+    global Last_IHKH 
     if (time.time() - Last_IHKH) > IHKR_Cooldown:
         I_hardly_know_her.I_hardly_know_her(I)
-        IHKR_helper(I, Last_IHKH)
+        Last_IHKH = time.time()
         if I.CF:
             await message.add_reaction('<:feetChan:1047798934594146335>')
         if I.Last_IHKH!= -1:

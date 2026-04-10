@@ -6,7 +6,7 @@ import discord
 Non_Ratio_Channel = {"vent-advice-channel"}
 
 def ratio(I):
-    filename = f'{I.message.guild.name}.json'
+    filename = f'Information Files\\{I.message.guild.name}.json'
 
     # Load leaderboard
     if os.path.exists(filename):
