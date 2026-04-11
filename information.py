@@ -1,9 +1,11 @@
-class information:
-    def __init__(self, message, client=None, BotId=None):
+"""Holds the information object"""
+class Information:
+    """holds message,client and bodid info"""
+    def __init__(self, message, client=None, botid=None):
         self.message = message
         self.client = client
-        self.botID = BotId
+        self.botid = botid
 
-        self.Return_Message = ''
-        self.CF = False
-        self.Last_IHKH = -1
+        self.return_message = ''
+        self.chandler = False
+        self.last_ihkh = -1

@@ -32,7 +32,8 @@ def ratio(I):
             leaderboard[user_id] = {
                 "name": user_name,
                 "ratio": 1,
-                "points": 1
+                "points": 1,
+                "penalty": 0
             }
 
         # Sort leaderboard

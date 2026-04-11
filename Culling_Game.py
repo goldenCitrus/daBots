@@ -37,7 +37,37 @@ def ViewPoints(I):
 
     I.Return_Message = embed
     
-def AddRules():
+def AddRules(I,RuleAdd):
+    server_name = I.message.guild.name
+    filename = f'{server_name}.json'
+    if os.path.exists(filename):
+        with open(filename, 'r') as f:
+            UserInfo = json.load(f)
+    else:
+        UserInfo = {}
+
+    if UserInfo[str(I.message.user.id)]["points"] >= 5:
+        embed = discord.Embed(
+        title=f'Rule was added to the Game',
+        description=f'{RuleAdd}'
+    )
+        UserInfo[str(I.message.user.id)]["points"] -= 5
+        embed.set_thumbnail(url=I.message.guild.icon)
+
+        with open('Information Files\\Rules.txt', 'a') as file:
+            file.write(f'{RuleAdd}\n')
+
+        I.Return_Message = embed
+
+        with open(filename, 'w') as f:
+                json.dump(UserInfo, f, indent=4)
+    else:
+        embed = discord.Embed(
+        title=f'Rule was not added to the Game',
+        description=f'You dont have the points needed'
+        )
+        I.Return_Message = embed
+
     return
 
 def Join_The_Game(I):
