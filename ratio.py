@@ -3,76 +3,89 @@ import json
 import random
 import discord
 
-Non_Ratio_Channel = {"vent-advice-channel"}
+NON_RATIO_CHANNEL = {"vent-advice-channel"}
 
-def ratio(I):
-    filename = f'Information Files\\{I.message.guild.name}.json'
+def ratio(info):
+    """Random chance to rely with ratio to a message"""
+    filename = f'Information Files\\{info.message.guild.name}.json'
+
+    #User Info
+    user_id = str(info.message.author.id)
+    user_name = info.message.author.name.capitalize()
+
+    #Condtions
+    send_ratio = random.randint(0,75) == 1
+    shiny_message = random.randint(0,4080) == 4000
+    is_user_bot = user_id != str(info.botid)
+    valid_channel = info.message.channel.name not in NON_RATIO_CHANNEL
 
     # Load leaderboard
     if os.path.exists(filename):
-        with open(filename, 'r') as f:
-            leaderboard = json.load(f)
+        with open(filename, encoding="utf-8") as f:
+            board = json.load(f)
     else:
-        leaderboard = {}
+        board = {}
 
-    if I.message.author == I.client.user:
+    if info.message.author == info.client.user:
         return
 
-    user_id = str(I.message.author.id)
-    user_name = I.message.author.name.capitalize()
-
     # Ratio trigger
-    if random.randint(0,75) == 1 and user_id != str(I.botID) and I.message.channel.name not in Non_Ratio_Channel:
-        I.Return_Message = f"{I.message.author.mention} Ratio"
+    if send_ratio and is_user_bot and valid_channel:
+        info.return_message = f"{info.message.author.mention} Ratio"
 
-        if user_id in leaderboard:
-            leaderboard[user_id]["ratio"] += 1
-            leaderboard[user_id]["points"] += 1
+        if user_id in board:
+            board[user_id]["ratio"] += 1
         else:
-            leaderboard[user_id] = {
+            board[user_id] = {
                 "name": user_name,
                 "ratio": 1,
-                "points": 1,
+                "points": 0,
                 "penalty": 0
             }
 
+        with open('Information Files\\Game_Members.txt', encoding="utf-8") as f:
+            game_members = [line.strip('\n') for line in f.readlines()]
+
+        if str(info.message.author) in game_members:
+            board[user_id]["points"] += 1
+
         # Sort leaderboard
-        leaderboard = dict(sorted(
-            leaderboard.items(),
+        board = dict(sorted(
+            board.items(),
             key=lambda x: x[1]["ratio"],
             reverse=True
         ))
 
-        with open(filename, 'w') as f:
-            json.dump(leaderboard, f, indent=4)
+        with open(filename, mode="w", encoding="utf-8") as f:
+            json.dump(board, f, indent=4)
 
         return
 
-    elif random.randint(0,4080) == 4000 and user_id != str(I.botID) and I.message.channel.name not in Non_Ratio_Channel:
-        I.Return_Message = f"{I.message.author.mention} I actually kinda like this one"
+    elif shiny_message and is_user_bot and valid_channel:
+        info.return_message = f"{info.message.author.mention} I actually kinda like this one"
 
-def leaderboard(I):
-    server_name = I.message.guild.name
-    filename = f'{server_name}.json'
+def leaderboard(info):
+    """Display's a leaderboard of ratioed users"""
+    server_name = info.message.guild.name
+    filename = f'Information Files\\{server_name}.json'
 
     if os.path.exists(filename):
-        with open(filename, 'r') as f:
-            leaderboard = json.load(f)
+        with open(filename, encoding="utf-8") as f:
+            board = json.load(f)
     else:
-        leaderboard = {}
+        board = {}
 
     embed = discord.Embed(
         title=f'Leaderboard for {server_name}',
         description='Top 10 most ratioed users'
     )
 
-    embed.set_thumbnail(url=I.message.guild.icon)
+    embed.set_thumbnail(url=info.message.guild.icon)
 
-    if not leaderboard:
-        I.Return_Message = 'No one in this server has been ratioed yet :pensive:'
+    if not board:
+        info.return_message = 'No one in this server has been ratioed yet :pensive:'
         return
-
-    for i, (user_id, data) in enumerate(leaderboard.items()):
+    for i, (_, data) in enumerate(board.items()):
         if i >= 10:
             break
 
@@ -82,4 +95,4 @@ def leaderboard(I):
             inline=False
         )
 
-    I.Return_Message = embed
+    info.return_message = embed

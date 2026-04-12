@@ -8,4 +8,4 @@ class Information:
 
         self.return_message = ''
         self.chandler = False
-        self.last_ihkh = -1
+        self.is_ihkh = False

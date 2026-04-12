@@ -1,85 +1,99 @@
-import random
+"""Contains the functiontaly for the Culling Games"""
 import json
 import os
+
 import discord
 
-def CurrentRules(I):
-    with open('Information Files\\Rules.txt', 'r') as file:
-        I.Return_Message = file.read()
+def current_rules(info):
+    """Displays the current rules"""
+    with open('Information Files\\Rules.txt', encoding="utf-8") as file:
+        info.return_message = file.read()
 
-def ViewPoints(I):
-    server_name = I.message.guild.name
-    filename = f'{server_name}.json'
+def view_points(info):
+    """View the points"""
+    server_name = info.message.guild.name
+    filename = f'Information Files\\{server_name}.json'
 
+    with open('Information Files\\Game_Members.txt', encoding="utf-8") as f:
+        game_members = [line.strip('#0\n').capitalize() for line in f.readlines()]
+
+    print(game_members)
     if os.path.exists(filename):
-        with open(filename, 'r') as f:
-            leaderboard = json.load(f)
+        with open(filename, encoding="utf-8") as f:
+            board = json.load(f)
     else:
-        leaderboard = {}
-    
+        board = {}
     embed = discord.Embed(
         title=f'Leaderboard for {server_name}',
         description='Users Point Vaules'
     )
 
-    embed.set_thumbnail(url=I.message.guild.icon)
+    embed.set_thumbnail(url=info.message.guild.icon)
 
-    if not leaderboard:
-        I.Return_Message = 'No one in this server has points yet :pensive:'
+    if not board:
+        info.return_message = 'No one in this server has points yet :pensive:'
         return
 
-    for i, (user_id, data) in enumerate(leaderboard.items()):
-        embed.add_field(
-            name=f"{i+1}. {data['name']}",
-            value=f"has {data['points']} points",
-            inline=False
-        )
+    board = dict(sorted(
+            board.items(),
+            key=lambda x: x[1]["points"],
+            reverse=True
+        ))
+    counter = 0
+    for _, (_, data) in enumerate(board.items()):
+        print(data['name'])
+        if data['name'] in game_members:
+            counter += 1
+            embed.add_field(
+                name=f"{counter}. {data['name']}",
+                value=f"has {data['points']} points",
+                inline=False
+            )
 
-    I.Return_Message = embed
+    info.return_message = embed
     
-def AddRules(I,RuleAdd):
-    server_name = I.message.guild.name
-    filename = f'{server_name}.json'
+def add_rules(info, rule):
+    """Add a rule to the culling games"""
+    server_name = info.message.guild.name
+    filename = f'Information Files\\{server_name}.json'
+
     if os.path.exists(filename):
-        with open(filename, 'r') as f:
-            UserInfo = json.load(f)
+        with open(filename, encoding="utf-8") as f:
+            user_info = json.load(f)
     else:
-        UserInfo = {}
+        user_info = {}
 
-    if UserInfo[str(I.message.user.id)]["points"] >= 5:
+    if user_info[str(info.message.user.id)]["points"] >= 5:
         embed = discord.Embed(
-        title=f'Rule was added to the Game',
-        description=f'{RuleAdd}'
+        title='Rule was added to the Game',
+        description=f'{rule}'
     )
-        UserInfo[str(I.message.user.id)]["points"] -= 5
-        embed.set_thumbnail(url=I.message.guild.icon)
+        user_info[str(info.message.user.id)]["points"] -= 5
+        embed.set_thumbnail(url=info.message.guild.icon)
 
-        with open('Information Files\\Rules.txt', 'a') as file:
-            file.write(f'{RuleAdd}\n')
+        with open('Information Files\\Rules.txt', encoding="utf-8") as file:
+            file.write(f'{rule}\n')
 
-        I.Return_Message = embed
+        info.return_message = embed
 
-        with open(filename, 'w') as f:
-                json.dump(UserInfo, f, indent=4)
+        with open(filename, encoding="utf-8") as f:
+            json.dump(user_info, f, indent=4)
     else:
         embed = discord.Embed(
-        title=f'Rule was not added to the Game',
-        description=f'You dont have the points needed'
+        title='Rule was not added to the Game',
+        description='You dont have the points needed'
         )
-        I.Return_Message = embed
 
+        info.return_message = embed
     return
 
-def Join_The_Game(I):
-    with open('Information Files\\Game_Members.txt', 'r') as file:
+def join_the_game(info):
+    """Allows users to join the game"""
+    with open('Information Files\\Game_Members.txt', encoding="utf-8") as file:
         player_list = [line.strip() for line in file.readlines()]
-        file.close
-    
-    if str(I.message.user) not in player_list:
-        with open('Information Files\\Game_Members.txt', 'a') as file:
-            file.write(f'{I.message.user}\n')
-            file.close
-        I.Return_Message = 'was added to the Game'
+    if str(info.message.user) not in player_list:
+        with open('Information Files\\Game_Members.txt', encoding="utf-8") as file:
+            file.write(f'{info.message.user}\n')
+        info.return_message = 'was added to the Game'
     else:
-        I.Return_Message = "you can't join twice"
-        
+        info.return_message = "you can't join twice"

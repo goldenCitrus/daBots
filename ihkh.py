@@ -1,20 +1,22 @@
-""""""
+"""Code for I hardly know her"""
 import random
 import string
-import time
 
-Non_Channel = {"vent-advice-channel"}
+NON_IHKR_CHANNEL = {"vent-advice-channel"}
 
-def I_hardly_know_her(I):
-    message_str = I.message.content
+def ihkh(info):
+    """Checks message for I hardly know her"""
+    message_str = info.message.content
     no_punct = message_str.translate(str.maketrans('', '', string.punctuation)).lower()
     split_message = no_punct.split()
-        
-    # rnd = random.randint(10,30)
-    if I.message.author.id == 186239130596933632:
-        I.CF = True
-        # I hardly know her command v v
-    if len(message_str) < 100 and not(str(I.message.channel) in Non_Channel):
+
+    valid_channel = not str(info.message.channel) in NON_IHKR_CHANNEL
+
+    if info.message.author.id == 186239130596933632:
+        info.chandler = True
+
+    # I hardly know her command
+    if len(message_str) < 100 and valid_channel:
         banned_words = ["boomer", "chandler"]
         er_words = []
         for i in split_message:
@@ -23,13 +25,13 @@ def I_hardly_know_her(I):
                     er_words.append(i)
             except IndexError:
                 continue
-        if bool(er_words) == True:
-            I.Last_IHKH = time.time()
+        if bool(er_words):
+            info.is_ihkh = True
             if len(er_words) == 1:
-                I.Return_Message = f"{er_words.pop().capitalize()}? I hardly know her!"
+                info.return_message = f"{er_words.pop().capitalize()}? I hardly know her!"
 
             else:
                 len_er_words = len(er_words)
                 the_chosen_num = random.randint(1,len_er_words)
                 the_chosen_str = er_words[the_chosen_num-1]
-                I.Return_Message = f"{the_chosen_str.capitalize()}? I hardly know her!"
+                info.return_message = f"{the_chosen_str.capitalize()}? I hardly know her!"
