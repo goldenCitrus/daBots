@@ -12,7 +12,7 @@ import ratio
 #Establish bot Id so bot doesnt respond to itself
 #Change Bot Id to own bot
 BOTID = 177504009748217856
-IHKR_COOLDOWN = 300
+IHKR_COOLDOWN = 500
 GUILD_ID = discord.Object(id=1008443588344025089)
 
 def main():
