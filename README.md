@@ -3,20 +3,19 @@
 Conher is a simple discord text bot with many features including
 
 ## **Ratio**
-        This has a 1.3% (1/75) chance of responding to a message sent within permanent 
-channels with the simple phrase of “ratio”
+        This has a 1.3% (1/75) chance of responding to a message sent within permitted channels with the simple phrase of “ratio”
 
 ### **Commands**
 
-*Leaderboard*
-		This is a command that any user can type that will display the top 10 most ratioed players within a given server
+*Leaderboard*: This is a command that any user can type that will display the top 10 most ratioed players within the server
 
 ## **I Hardly Know Her**
 This features checks a message and if it contains a word that ends with -er then Conher will simply response with “--er, i hardly know her”
     	## Fish detection
 	  This checks every message that is sent and if a message includes a type of fish it will respond with a gif of Joel the spinning fish
-      
-                                                    https://tenor.com/view/fish-spin-sha-gif-26863370
+
+https://tenor.com/view/fish-spin-sha-gif-26863370
+
 ## **Culling Games**
 	 The Culling Games is a feature that is based on a Jujutsu Kaisen arc with the same name, if a user decides to join the game with the given command /join, while they communicate within their server they will collect points every time they get ratioed by Conher. Afterwards they can spend the default 5 points (This number could be change) to add a new rule that the players have to follow
 
@@ -39,14 +38,13 @@ This features checks a message and if it contains a word that ends with -er then
         Both of these methods have their pros and cons but the best results I would suggest doing a mix of both.
 
 ### **Commands**
-*current_rules*
-    This responds this the current rules of the game
-*view_points*
-    Shows a leaderboard of everyone is has points
-*add_rules*
-    This commands allows user to add to the rules using up thier points
-*join_the_game*
-    Allows anyone in the server to become a *Player*
+*current_rules*: This responds this the current rules of the game
+
+*view_points*: Shows a leaderboard of everyone is has points
+
+*add_rules*: This commands allows user to add to the rules using up thier points
+
+*join_the_game*: Allows anyone in the server to become a *Player*
 
 
 
