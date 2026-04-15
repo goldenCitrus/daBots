@@ -11,7 +11,8 @@ Conher is a simple discord text bot with many features including
 
 ## **I Hardly Know Her**
 This features checks a message and if it contains a word that ends with -er then Conher will simply response with “--er, i hardly know her”
-    	## Fish detection
+
+## Fish detection
 	  This checks every message that is sent and if a message includes a type of fish it will respond with a gif of Joel the spinning fish
 
 https://tenor.com/view/fish-spin-sha-gif-26863370
