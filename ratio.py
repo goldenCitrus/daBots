@@ -1,3 +1,4 @@
+""""""
 import os
 import json
 import random
@@ -14,7 +15,7 @@ def ratio(info):
     user_name = info.message.author.name.capitalize()
 
     #Condtions
-    send_ratio = random.randint(0,75) == 1
+    send_ratio = random.randint(0,1) == 1
     shiny_message = random.randint(0,4080) == 4000
     is_user_bot = user_id != str(info.botid)
     valid_channel = info.message.channel.name not in NON_RATIO_CHANNEL
@@ -40,13 +41,16 @@ def ratio(info):
                 "name": user_name,
                 "ratio": 1,
                 "points": 0,
-                "penalty": 0
+                "penalty": 0,
+                "player": 0
             }
 
         with open('Information Files\\Game_Members.txt', encoding="utf-8") as f:
             game_members = [line.strip('\n') for line in f.readlines()]
 
-        if str(info.message.author) in game_members:
+        print(user_name)
+        print(game_members)
+        if user_name.strip() in game_members:
             board[user_id]["points"] += 1
 
         # Sort leaderboard

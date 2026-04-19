@@ -16,7 +16,7 @@ def ihkh(info):
         info.chandler = True
 
     # I hardly know her command
-    if len(message_str) < 100 and valid_channel:
+    if len(message_str) < 150 and valid_channel:
         banned_words = ["boomer", "chandler"]
         er_words = []
         for i in split_message:

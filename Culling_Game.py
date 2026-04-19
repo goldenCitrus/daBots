@@ -7,7 +7,10 @@ import discord
 def current_rules(info):
     """Displays the current rules"""
     with open('Information Files\\Rules.txt', encoding="utf-8") as file:
-        info.return_message = file.read()
+        return_string = ''
+        for num, txt in enumerate(file.readlines()):
+            return_string += f'{num}. {txt}'
+        info.return_message = return_string
 
 def view_points(info):
     """View the points"""

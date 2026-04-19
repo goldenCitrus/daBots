@@ -1,4 +1,4 @@
-1. To Become a Player you must type /join into chat
-2. Points are earned when a Player gets Ratioed
-3. One Player could add a new rule using 5 Points
-4. Players that break a rule will gain a penalty point for each rule broken
+To Become a Player you must type /join into chat
+Points are earned when a Player gets Ratioed
+One Player could add a new rule using 5 Points
+Players that break a rule will gain a penalty point for each rule broken
